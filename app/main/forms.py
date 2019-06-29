@@ -17,3 +17,6 @@ class PitchForm(FlaskForm):
 class CommentForm(FlaskForm):
     comment_content = TextAreaField('Write a comment', validators=[Required()])
     submit = SubmitField('Comment')
+class GeneralReviewForm(FlaskForm):
+    review = StringField('Review: ', validators=[Required()])
+    submit = SubmitField('Submit')
