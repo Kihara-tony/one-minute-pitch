@@ -181,3 +181,11 @@ def dislike(pitch_id):
     new_dislike = Dislike(pitch_id=pitch_id, user = current_user)
     new_dislike.save_dislikes()
     return redirect(url_for('.index'))
+@main.route('/user/rating')
+@login_required
+def ratings():
+    upvote = Upvote(user=current_user)
+    upvote.save_upvote()
+    votes = db.session.query(func.sum(Upvote.upvote)).scalar()
+    votes = str(votes)
+    return votes
