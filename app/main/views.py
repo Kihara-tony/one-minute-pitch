@@ -27,7 +27,6 @@ def update_profile(uname):
         db.session.add(user)
         db.session.commit()
         return redirect(url_for('.profile', uname=user.username))
-
         return render_template('profile/update.html', form=form)
 @main.route('/',methods = ['GET', 'POST'])
 
@@ -43,5 +42,20 @@ def index():
 
     title = 'One Minute Pitch'
     return render_template('index.html', title = title, pitch = pitch,  likes=likes, dislikes=dislikes)
+@main.route('/user/<uname>')
+def profile(uname):
+    '''
+    View profile page function that returns the profile page and its data
+    '''
+    user = User.query.filter_by(username = uname).first()
+    title = f"{uname.capitalize()}'s Profile"
+
+    get_pitches = Pitch.query.filter_by(author = User.id).all()
+    get_comments = Comment.query.filter_by(user_id = User.id).all()
+    get_likes = Like.query.filter_by(user_id = User.id).all()
+    get_dislikes = Dislike.query.filter_by(user_id = User.id).all()
+
+    if user is None:
+        abort (404) 
 
 
