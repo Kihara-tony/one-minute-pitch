@@ -100,4 +100,25 @@ def index2():
 
     title = 'Home | One Min Pitch'
     return render_template('home.html', title = title, pitch = pitch)
-    
+@main.route('/pitch/new',methods = ['GET','POST'])
+@login_required
+def pitch():
+    '''
+    View pitch function that returns the pitch page and data
+    '''
+    pitch_form = PitchForm()
+    likes = Like.query.filter_by(pitch_id=Pitch.id)
+
+    if pitch_form.validate_on_submit():
+        body = pitch_form.body.data
+        category = pitch_form.category.data
+        title = pitch_form.title.data
+
+        new_pitch = Pitch(title=title, body=body, category = category, user = current_user)
+        new_pitch.save_pitch()
+
+        return redirect(url_for('main.index'))
+
+
+    title = 'New Pitch | One Minute Pitch'
+    return render_template('pitch.html', title = title, pitch_form = pitch_form, likes = likes)
