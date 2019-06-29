@@ -189,3 +189,11 @@ def ratings():
     votes = db.session.query(func.sum(Upvote.upvote)).scalar()
     votes = str(votes)
     return votes
+@main.route('/user/rating')
+@login_required
+def rating():
+    downvote = Downvote(user=current_user)
+    downvote.save_downvote()
+    votes = db.session.query(func.sum(Downvote.downvote)).scalar()
+    votes = str(votes)
+    return votes
