@@ -13,3 +13,9 @@ def index():
     title = 'Welcome to The Pitch app'
 
     return render_template('index.html', title=title)
+@main.route('/user/<uname>/update', methods=['GET', 'POST'])
+@login_required
+def update_profile(uname):
+    user = User.query.filter_by(username=uname).first()
+    if user is None:
+        abort(404)
