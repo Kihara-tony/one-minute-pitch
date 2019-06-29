@@ -19,10 +19,29 @@ def update_profile(uname):
     user = User.query.filter_by(username=uname).first()
     if user is None:
         abort(404)
-form = UpdateProfile()
+    form = UpdateProfile()
 
     if form.validate_on_submit():
         user.bio = form.bio.data
 
         db.session.add(user)
         db.session.commit()
+        return redirect(url_for('.profile', uname=user.username))
+
+        return render_template('profile/update.html', form=form)
+@main.route('/',methods = ['GET', 'POST'])
+
+def index():
+
+    '''
+    View root page function that returns the index page and its data
+    '''
+    pitch = Pitch.query.filter_by().first()
+    likes = Like.get_all_likes(pitch_id=Pitch.id)
+    dislikes = Dislike.get_all_dislikes(pitch_id=Pitch.id)
+
+
+    title = 'One Minute Pitch'
+    return render_template('index.html', title = title, pitch = pitch,  likes=likes, dislikes=dislikes)
+
+
