@@ -146,3 +146,21 @@ def comment(pitch_id):
     title = 'New Comment | One Min Pitch'
 
     return render_template('comment.html', title = title, pitch=pitch ,comment_form = comment_form, comment = comments )
+@main.route('/pitch/<int:pitch_id>/like',methods = ['GET','POST'])
+@login_required
+def like(pitch_id):
+    '''
+    View like function that returns likes
+    '''
+    pitch = Pitch.query.get(pitch_id)
+    user = current_user
+
+    likes = Like.query.filter_by(pitch_id=pitch_id)
+
+
+    if Like.query.filter(Like.user_id==user.id,Like.pitch_id==pitch_id).first():
+        return  redirect(url_for('.index'))
+
+    new_like = Like(pitch_id=pitch_id, user = current_user)
+    new_like.save_likes()
+    return redirect(url_for('.index'))
