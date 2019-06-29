@@ -57,5 +57,5 @@ def profile(uname):
 
     if user is None:
         abort (404) 
-
+    return render_template("profile/profile.html", user = user, title=title, pitches_no = get_pitches, comments_no = get_comments, likes_no = get_likes, dislikes_no = get_dislikes)
 
