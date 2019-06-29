@@ -122,3 +122,27 @@ def pitch():
 
     title = 'New Pitch | One Minute Pitch'
     return render_template('pitch.html', title = title, pitch_form = pitch_form, likes = likes)
+@main.route('/pitch/<int:pitch_id>/comment',methods = ['GET', 'POST'])
+@login_required
+def comment(pitch_id):
+    '''
+    View comments page function that returns the comment page and its data
+    '''
+
+    comment_form = CommentForm()
+    pitch = Pitch.query.get(pitch_id)
+    if pitch is None:
+        abort(404)
+
+    if comment_form.validate_on_submit():
+        comment_body = comment_form.comment_body.data
+
+        new_comment = Comment(comment=comment_body, pitch_id = pitch_id, user = current_user)
+        new_comment.save_comment()
+
+        return redirect(url_for('.comment', pitch_id=pitch_id))
+
+    comments = Comment.query.filter_by(pitch_id=pitch_id).all()
+    title = 'New Comment | One Min Pitch'
+
+    return render_template('comment.html', title = title, pitch=pitch ,comment_form = comment_form, comment = comments )
