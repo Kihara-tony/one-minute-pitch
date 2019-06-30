@@ -24,3 +24,15 @@ class User(UserMixin,db.Model):
         self.password_hash = generate_password_hash(password)
     def verify_password(self,password):
         return check_password_hash(self.password_hash,password)
+    def __repr__(self):
+        return f'User {self.username}'
+class Role(db.Model):
+    __tablename__ ='roles'
+
+    id = db.Column(db.Integer,primary_key = True)
+    name = db.Column(db.String(255))
+    users = db.relationship('User',backref = 'role', lazy = "dynamic")
+
+
+    def __repr__(self):
+        return f'User {self.name}'
