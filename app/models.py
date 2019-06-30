@@ -3,12 +3,13 @@ from . import login_manager
 from datetime import datetime
 from werkzeug.security import generate_password_hash,check_password_hash
 from flask_login import UserMixin
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
+
 class User(UserMixin,db.Model):
     __tablename__='users'
-
     id = db.Column(db.Integer,primary_key = True)
     username = db.Column(db.String(255),index = True)
     email = db.Column(db.String(255),index = True)
@@ -26,6 +27,7 @@ class User(UserMixin,db.Model):
         return check_password_hash(self.password_hash,password)
     def __repr__(self):
         return f'User {self.username}'
+
 class Role(db.Model):
     __tablename__ ='roles'
     id = db.Column(db.Integer,primary_key = True)
@@ -33,6 +35,7 @@ class Role(db.Model):
     users = db.relationship('User',backref = 'role', lazy = "dynamic")
     def __repr__(self):
         return f'User {self.name}'
+
 class Pitch(db.Model):
     __tablename__= 'pitches'
     id = db.Column(db.Integer,primary_key = True)
@@ -57,6 +60,7 @@ class Pitch(db.Model):
         return pitches
     def __repr__(self):
         return f'Pitch {self.pitch_title}'
+
 class Comment(db.Model):
     __tablename__='comments'
     id = db.Column(db.Integer,primary_key=True)
@@ -74,6 +78,7 @@ class Comment(db.Model):
     def get_all_comments(cls,id):
         comments = Comment.query.order_by('id').all()
         return comments
+
 class Like (db.Model):
     __tablename__ = 'likes'
     id = db.Column(db.Integer,primary_key=True)
@@ -96,6 +101,7 @@ class Like (db.Model):
         return likes
     def __repr__(self):
         return f'{self.user_id}:{self.pitch_id}'
+        
 class Dislike (db.Model):
     __tablename__ = 'dislikes'
     id = db.Column(db.Integer,primary_key=True)
