@@ -12,7 +12,6 @@ class GeneralForm(FlaskForm):
 class PitchForm(FlaskForm):
     pitch_title = StringField('Title', validators=[Required()])
     content = TextAreaField('Pitch', validators=[Required()])
-    category = SelectField('Category', choices=[('Advertisement','Advertisement Pitch'),('Project','Project Pitch'),('General','General Pitch'),('Sale','Sale Pitch')], validators=[Required()])
     submit = SubmitField('Write Your Pitch!')
 class CommentForm(FlaskForm):
     comment_content = TextAreaField('Write a comment', validators=[Required()])
