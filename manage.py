@@ -16,3 +16,6 @@ class User(UserMixin,db.Model):
     bio = db.Column(db.String(255))
     profile_pic_path = db.Column(db.String())
     password_hash = db.Column(db.String(255))
+    @property
+    def password(self):
+        raise AttributeError('You Cannot read the password attribute')
