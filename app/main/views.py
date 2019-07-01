@@ -11,10 +11,10 @@ def index():
     View root page function that returns the index page and its data
     '''
     title = 'Home - Welcome to Perfect Pitch'
-    interview_piches = Pitch.get_pitches('interview')
-    product_piches = Pitch.get_pitches('product')
+    interview_pitches = Pitch.get_pitches('interview')
+    product_pitches = Pitch.get_pitches('product')
     promotion_pitches = Pitch.get_pitches('promotion')
-    return render_template('index.html',title = title, interview = interview_piches, product = product_piches, promotion = promotion_pitches)
+    return render_template('index.html',title = title, interview = interview_pitches, product = product_pitches, promotion = promotion_pitches)
 @main.route('/user/<uname>')
 def profile(uname):
     user = User.query.filter_by(username = uname).first()
@@ -98,4 +98,5 @@ def user_pitches(uname):
     pitches = Pitch.query.filter_by(user_id = user.id).all()
     pitches_count = Pitch.count_pitches(uname)
     user_joined = user.date_joined.strftime('%b %d, %Y')
+
     return render_template("profile/pitches.html", user=user,pitches=pitches,pitches_count=pitches_count,date = user_joined)
