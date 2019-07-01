@@ -1,6 +1,5 @@
 {% extends 'base.html'%}
 {%import 'macros.html' as macro%}
-
 {% block content %}
 <div class="container">
     <{% extends 'base.html' %} 
@@ -8,10 +7,8 @@
     {% block content %} 
         {{wtf.quick_form(form)}} 
     {% endblock %}div class="row">
-        <!-- displaying  Username-->
         <h3> {{user.username| capitalize}} </h3>
         <hr>
-        <!--Display profile photo-->
         <div class="col-md-3">
             <div class="thumbnail">
                 {% if user.profile_pic_path %}
@@ -28,7 +25,7 @@
         <div class="col-md-9">
             <p>Name: {{user.firstname}} {{user.lastname}} </p>
             <p>No of piches: {{pitches_count}}</p>
-            <p>Date joined: {{date}}</p>
+            <p>Date you joined: {{date}}</p>
         </div>
         <div class="row">
             <div class="col-md-12">
