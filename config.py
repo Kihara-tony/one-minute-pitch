@@ -4,9 +4,18 @@ class Config:
     '''
     general configuration
     '''
-    SQLALCHEMY_DATABASE_URI = 'postgres://tony:tonyqtjds2@ec2-54-235-240-126.compute-1.amazonaws.com:5432/di59qlb6lan20'
+    SECRET_KEY = os.environ.get('SECRET_KEY')
+    SQLALCHEMY_DATABASE_URI = 'postgres://tony:tonyqtjds2@localhost/pitch'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-
+    UPLOADED_PHOTOS_DEST ='app/static'
+    # email configurations
+    MAIL_SERVER = 'smtp.gmailemail.com'
+    MAIL_PORT = 587
+    MAIL_USE_TLS = True
+    MAIL_USERNAME = os.environ.get("MAIL_USERNAME")
+    MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")
+    SUBJECT_PREFIX ='pitch'
+    SENDER_EMAIL ='tonykiharatonkin6@gmail.com'
     @staticmethod
     def init_app(app):
         pass
@@ -17,15 +26,17 @@ class ProdConfig(Config):
     production configuration child class
     '''
 
-    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
-
 
 class DevConfig(Config):
     '''
     development configuration child class
     '''
+class TestConfig(Config):
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://tony:tonyqtjds2@localhost/pitch_test'
+
+class DevConfig(Config):
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://tony:tonyqtjds2@localhost/pitch'
     DEBUG = True
-    SECRET_KEY = os.environ.get('SECRET_KEY')
 
 config_options = {
     'development': DevConfig,
