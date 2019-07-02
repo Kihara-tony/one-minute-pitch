@@ -13,7 +13,7 @@
 # USING THE APP :grey_question:
 
  ~~~
- $ git clone 
+ $ git clone https://github.com/Kihara-tony/one-minute-pitch.git
  $ cd Pitch-a-minute
  $ code . or atom .
  $ ./start.sh
