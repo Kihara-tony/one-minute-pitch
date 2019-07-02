@@ -20,11 +20,8 @@ class User(UserMixin,db.Model):
     profile_pic_path = db.Column(db.String)
     pass_secure = db.Column(db.String(255))
     date_joined = db.Column(db.DateTime,default=datetime.utcnow)
-
     pitches = db.relationship('Pitch',backref = 'user',lazy = "dynamic")
-
     comments = db.relationship('Comment',backref = 'user',lazy = "dynamic")
-
     @property
     def password(self):
         raise AttributeError('You cannot read the password attribute')
@@ -95,3 +92,4 @@ class Comment(db.Model):
     def get_comments(cls,pitch):
         comments = Comment.query.filter_by(pitch_id=pitch).all()
         return comments
+
